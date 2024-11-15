@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Envio de E-mails</title>
+    <style>
+        /* Estilos Gerais */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+        /* Container Principal */
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        /* Formulário */
+        form p {
+            margin-bottom: 20px;
+        }
+        form label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        form input[type="text"],
+        form input[type="file"],
+        form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccd0d5;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        form textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        form button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+        }
+        form button:hover {
+            background-color: #0056b3;
+        }
+        /* Seção de Progresso */
+        #progressSection {
+            margin-top: 40px;
+        }
+        #progressSection p {
+            font-size: 18px;
+            color: #333;
+        }
+        #progressSection span {
+            font-weight: bold;
+        }
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 20px;
+            }
+            form button {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enviar E-mails</h1>
+        <form id="emailForm">
+            <p>
+                <label for="file">Upload da Planilha Excel:</label>
+                <input type="file" name="file" id="file" accept=".xlsx" required>
+            </p>
+            <p>
+                <label for="subject">Assunto do E-mail:</label>
+                <input type="text" name="subject" id="subject" required>
+            </p>
+            <p>
+                <label for="email_body">Corpo do E-mail (HTML suportado):</label>
+                <textarea name="email_body" id="email_body" required></textarea>
+            </p>
+            <p>
+                <button type="submit">Enviar E-mails</button>
+            </p>
+        </form>
+
+        <div id="progressSection" style="display:none;">
+            <h2>Progresso do Envio</h2>
+            <p>Status: <span id="status">Aguardando...</span></p>
+            <p>E-mails Enviados: <span id="progress">0</span>/<span id="total">0</span></p>
+            <p>Último E-mail Enviado Para: <span id="last_email">N/A</span></p>
+            <p>Tempo Estimado Restante: <span id="eta">Calculando...</span></p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('emailForm');
+        const progressSection = document.getElementById('progressSection');
+        const statusSpan = document.getElementById('status');
+        const progressSpan = document.getElementById('progress');
+        const totalSpan = document.getElementById('total');
+        const lastEmailSpan = document.getElementById('last_email');
+        const etaSpan = document.getElementById('eta');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            fetch('https://ideal-chainsaw-ww7w47p9r79f5r9g-5000.app.github.dev/start_dispatch', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.error){
+                    alert(data.error);
+                } else {
+                    progressSection.style.display = 'block';
+                    updateProgress();
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+        });
+
+        function updateProgress(){
+            fetch('https://ideal-chainsaw-ww7w47p9r79f5r9g-5000.app.github.dev/progress')
+            .then(response => response.json())
+            .then(data => {
+                if(data.status){
+                    statusSpan.innerText = data.status;
+                    progressSpan.innerText = data.progress;
+                    totalSpan.innerText = data.total;
+                    lastEmailSpan.innerText = data.last_email || 'N/A';
+
+                    // Calcula o tempo estimado restante
+                    var remainingEmails = data.total - data.progress;
+                    var etaSeconds = remainingEmails * 60;  // Pausa de 60 segundos entre os e-mails
+                    var minutes = Math.floor(etaSeconds / 60);
+                    var seconds = etaSeconds % 60;
+                    if (data.status === 'concluído') {
+                        etaSpan.innerText = 'Concluído';
+                    } else {
+                        etaSpan.innerText = minutes + ' minutos ' + seconds + ' segundos';
+                        setTimeout(updateProgress, 5000);  // Atualiza a cada 5 segundos
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+        }
+    </script>
+</body>
+</html>
