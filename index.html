@@ -126,7 +126,7 @@
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = new FormData(form);
-            fetch('https://ideal-chainsaw-ww7w47p9r79f5r9g-5000.app.github.dev/start_dispatch', {
+            fetch('https://disparo-email.onrender.com/start_dispatch', {
                 method: 'POST',
                 body: formData
             })
@@ -145,7 +145,7 @@
         });
 
         function updateProgress(){
-            fetch('https://ideal-chainsaw-ww7w47p9r79f5r9g-5000.app.github.dev/progress')
+            fetch('https://disparo-email.onrender.com/progress')
             .then(response => response.json())
             .then(data => {
                 if(data.status){
