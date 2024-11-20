@@ -2,112 +2,295 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Envio de E-mails</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome para Ícones -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Estilos Gerais */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f6f8;
+        /* Reset de CSS */
+        *, *::before, *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+
+        /* Estilos Gerais */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, rgb(43, 27, 78), #928dab);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
         h1, h2 {
-            color: #333;
-            text-align: center;
-        }
-        /* Container Principal */
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            background-color: #fff;
-            padding: 30px 40px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border-radius: 8px;
-        }
-        /* Formulário */
-        form p {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #ffffff;
             margin-bottom: 20px;
         }
+
+        /* Container Principal */
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 40px 50px;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        /* Header com Logo e Título */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px; /* Espaço entre a header e o formulário */
+        }
+
+        .header img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            margin-right: 20px; /* Espaço entre a logo e o título */
+        }
+
+        .header h1 {
+            font-size: 2em;
+            color: #ffffff;
+        }
+
+        /* Formulário */
+        form p {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
         form label {
             display: block;
-            font-weight: bold;
+            font-weight: 500;
             margin-bottom: 8px;
-            color: #555;
+            color: #d1c4e9;
+            font-size: 1.1em;
         }
+
         form input[type="text"],
         form input[type="file"],
         form textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ccd0d5;
-            border-radius: 4px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        form textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-        form button {
-            background-color: #007bff;
-            color: #fff;
             padding: 14px 20px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(5px);
+            transition: background 0.3s ease, color 0.3s ease;
+            position: relative;
+        }
+
+        form input[type="text"]::placeholder,
+        form textarea::placeholder {
+            color: rgba(0, 0, 0, 0.7); /* Cor preta com opacidade para melhor visibilidade */
+            opacity: 1; /* Garantir que o placeholder seja visível */
+        }
+
+        form input[type="file"]::file-selector-button {
+            background: rgb(43, 27, 78);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        form input[type="file"]::file-selector-button:hover {
+            background: #6a11cb;
+        }
+
+        form input[type="text"]:focus,
+        form input[type="file"]:focus,
+        form textarea:focus {
+            background: rgba(255, 255, 255, 0.3);
+            outline: none;
+        }
+
+        form textarea {
+            resize: vertical;
+            min-height: 180px;
+        }
+
+        /* Descrições de Campos */
+        .field-description {
+            font-size: 0.9em;
+            color: #000000; /* Cor preta para destaque */
+            margin-top: 5px;
+        }
+
+        /* Botão de Envio */
+        form button {
+            background: rgb(43, 27, 78);
+            color: #fff;
+            padding: 16px 0;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 18px;
             width: 100%;
+            font-weight: 500;
+            transition: background 0.3s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
+        form button i {
+            margin-right: 8px;
+            transition: margin-right 0.3s ease;
+        }
+
         form button:hover {
-            background-color: #0056b3;
+            background: #6a11cb;
+            transform: translateY(-3px);
         }
+
+        form button:hover i {
+            margin-right: 12px;
+        }
+
         /* Seção de Progresso */
         #progressSection {
             margin-top: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 30px 40px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: opacity 0.5s ease;
         }
+
+        #progressSection.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #progressSection.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
         #progressSection p {
-            font-size: 18px;
-            color: #333;
+            font-size: 1.1em;
+            color: #d1c4e9;
+            margin-bottom: 15px;
         }
+
         #progressSection span {
-            font-weight: bold;
+            font-weight: 700;
+            color: #ffffff;
         }
+
+        /* Barra de Progresso */
+        .progress-bar {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar-inner {
+            height: 20px;
+            width: 0;
+            background: rgb(43, 27, 78);
+            transition: width 0.5s ease;
+        }
+
         /* Responsividade */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .container {
-                padding: 20px;
-                margin: 20px;
+                padding: 30px 25px;
             }
+
+            .header {
+                flex-direction: column;
+            }
+
+            .header img {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
             form button {
                 font-size: 16px;
+                padding: 14px 0;
+            }
+
+            h1, h2 {
+                font-size: 1.5em;
+            }
+
+            .header img {
+                max-width: 120px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Enviar E-mails</h1>
+        <!-- Header com Logo e Título -->
+        <div class="header">
+            <img src="https://firebasestorage.googleapis.com/v0/b/player-music-72d4d.appspot.com/o/img%2Ff24f2140-978a-4ae4-af06-8e13b5048c68.png?alt=media&token=3f919229-cd00-4a45-ab4a-4c90111b1473" alt="Logo">
+           
+        </div>
+
         <form id="emailForm">
             <p>
-                <label for="file">Upload da Planilha Excel:</label>
+                <label for="file"><i class="fas fa-file-excel"></i> Upload da Planilha Excel:</label>
                 <input type="file" name="file" id="file" accept=".xlsx" required>
+                <div class="field-description">Selecione o arquivo Excel que contém a lista de destinatários.</div>
             </p>
             <p>
-                <label for="subject">Assunto do E-mail:</label>
-                <input type="text" name="subject" id="subject" required>
+                <label for="subject"><i class="fas fa-heading"></i> Assunto do E-mail:</label>
+                <input type="text" name="subject" id="subject" placeholder="Ex: Promoção Especial de Outubro" required>
+                <div class="field-description">Digite o assunto que aparecerá no e-mail enviado.</div>
             </p>
             <p>
-                <label for="email_body">Corpo do E-mail (HTML suportado):</label>
-                <textarea name="email_body" id="email_body" required></textarea>
+                <label for="email_body"><i class="fas fa-envelope-open-text"></i> Corpo do E-mail (HTML suportado):</label>
+                <textarea name="email_body" id="email_body" placeholder="Ex: &lt;h1&gt;Olá!&lt;/h1&gt;&lt;p&gt;Esta é uma promoção especial para você.&lt;/p&gt;" required></textarea>
+                <div class="field-description">
+                    Insira o conteúdo do e-mail. Você pode usar HTML para personalizar o formato.
+                    <br>
+                    Recomendamos fortemente que você faça o envio do e-mail formatado em HTML. Peça para o ChatGPT: "<strong>Por favor, formate esse texto para HTML de e-mail</strong>".
+                </div>
             </p>
             <p>
-                <button type="submit">Enviar E-mails</button>
+                <button type="submit"><i class="fas fa-paper-plane"></i> Enviar E-mails</button>
             </p>
         </form>
 
-        <div id="progressSection" style="display:none;">
+        <div id="progressSection" class="hidden">
             <h2>Progresso do Envio</h2>
+            <div class="progress-bar">
+                <div class="progress-bar-inner" id="progressBar"></div>
+            </div>
             <p>Status: <span id="status">Aguardando...</span></p>
             <p>E-mails Enviados: <span id="progress">0</span>/<span id="total">0</span></p>
             <p>Último E-mail Enviado Para: <span id="last_email">N/A</span></p>
@@ -123,6 +306,7 @@
         const totalSpan = document.getElementById('total');
         const lastEmailSpan = document.getElementById('last_email');
         const etaSpan = document.getElementById('eta');
+        const progressBar = document.getElementById('progressBar');
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -136,12 +320,15 @@
                 if(data.error){
                     alert(data.error);
                 } else {
-                    progressSection.style.display = 'block';
+                    progressSection.classList.remove('hidden');
+                    progressSection.classList.add('visible');
+                    totalSpan.innerText = data.total || 0;
                     updateProgress();
                 }
             })
             .catch(error => {
                 console.error('Erro:', error);
+                alert('Ocorreu um erro ao iniciar o envio dos e-mails.');
             });
         });
 
@@ -152,24 +339,28 @@
                 if(data.status){
                     statusSpan.innerText = data.status;
                     progressSpan.innerText = data.progress;
-                    totalSpan.innerText = data.total;
                     lastEmailSpan.innerText = data.last_email || 'N/A';
 
+                    // Atualiza a barra de progresso
+                    const percent = data.total ? (data.progress / data.total) * 100 : 0;
+                    progressBar.style.width = percent + '%';
+
                     // Calcula o tempo estimado restante
-                    var remainingEmails = data.total - data.progress;
-                    var etaSeconds = remainingEmails * 60;  // Pausa de 60 segundos entre os e-mails
-                    var minutes = Math.floor(etaSeconds / 60);
-                    var seconds = etaSeconds % 60;
-                    if (data.status === 'concluído') {
+                    const remainingEmails = data.total - data.progress;
+                    const etaSeconds = remainingEmails * 60;  // Pausa de 60 segundos entre os e-mails
+                    const minutes = Math.floor(etaSeconds / 60);
+                    const seconds = etaSeconds % 60;
+                    if (data.status.toLowerCase() === 'concluído') {
                         etaSpan.innerText = 'Concluído';
                     } else {
-                        etaSpan.innerText = minutes + ' minutos ' + seconds + ' segundos';
+                        etaSpan.innerText = `${minutes} minutos ${seconds} segundos`;
                         setTimeout(updateProgress, 5000);  // Atualiza a cada 5 segundos
                     }
                 }
             })
             .catch(error => {
                 console.error('Erro:', error);
+                alert('Ocorreu um erro ao atualizar o progresso.');
             });
         }
     </script>
