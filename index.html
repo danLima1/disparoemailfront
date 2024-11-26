@@ -19,58 +19,59 @@
         /* Estilos Gerais */
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, rgb(43, 27, 78), #928dab);
+            background-image: url("https://img.freepik.com/fotos-premium/fundo-roxo-com-efeito-de-luz_884097-3.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
             color: #ffffff;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            width: 100%;
+            padding: 20px 40px;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
             align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        header img {
+            height: 50px;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 100px 40px 40px; /* Espaço para o header fixo */
+            display: flex;
             justify-content: center;
-            padding: 20px;
+            align-items: flex-start;
         }
 
-        h1, h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            color: #ffffff;
-            margin-bottom: 20px;
-        }
-
-        /* Container Principal */
-        .container {
-            background: rgba(255, 255, 255, 0.1);
+        .form-section {
+            background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
             border-radius: 12px;
             padding: 40px 50px;
-            max-width: 900px;
+            max-width: 800px;
             width: 100%;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            transition: transform 0.3s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        .container:hover {
-            transform: scale(1.02);
-        }
-
-        /* Header com Logo e Título */
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 30px; /* Espaço entre a header e o formulário */
-        }
-
-        .header img {
-            max-width: 150px;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            margin-right: 20px; /* Espaço entre a logo e o título */
-        }
-
-        .header h1 {
-            font-size: 2em;
             color: #ffffff;
+        }
+
+        .form-section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2em;
         }
 
         /* Formulário */
@@ -95,17 +96,16 @@
             border: none;
             border-radius: 8px;
             font-size: 16px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.2);
             color: #ffffff;
             backdrop-filter: blur(5px);
             transition: background 0.3s ease, color 0.3s ease;
-            position: relative;
         }
 
         form input[type="text"]::placeholder,
         form textarea::placeholder {
-            color: rgba(0, 0, 0, 0.7); /* Cor preta com opacidade para melhor visibilidade */
-            opacity: 1; /* Garantir que o placeholder seja visível */
+            color: rgba(255, 255, 255, 0.7);
+            opacity: 1;
         }
 
         form input[type="file"]::file-selector-button {
@@ -126,7 +126,7 @@
         form input[type="text"]:focus,
         form input[type="file"]:focus,
         form textarea:focus {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.3);
             outline: none;
         }
 
@@ -138,7 +138,7 @@
         /* Descrições de Campos */
         .field-description {
             font-size: 16px;
-            color: #000000; /* Cor preta para destaque */
+            color: #ffffff;
             margin-top: 5px;
         }
 
@@ -182,6 +182,7 @@
             padding: 30px 40px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             transition: opacity 0.5s ease;
+            color: #ffffff;
         }
 
         #progressSection.hidden {
@@ -192,6 +193,13 @@
         #progressSection.visible {
             opacity: 1;
             visibility: visible;
+        }
+
+        #progressSection h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8em;
         }
 
         #progressSection p {
@@ -221,82 +229,114 @@
             transition: width 0.5s ease;
         }
 
+        /* Footer */
+        footer {
+            width: 100%;
+            padding: 20px 40px;
+            background: rgba(0, 0, 0, 0.6);
+            text-align: center;
+            font-size: 0.9em;
+            color: #d1c4e9;
+        }
+
         /* Responsividade */
+        @media (max-width: 1024px) {
+            main {
+                padding: 120px 20px 20px;
+            }
+
+            .form-section {
+                padding: 30px 40px;
+            }
+        }
+
         @media (max-width: 768px) {
-            .container {
-                padding: 30px 25px;
+            header {
+                padding: 15px 20px;
             }
 
-            .header {
-                flex-direction: column;
+            main {
+                padding: 100px 20px 20px;
             }
 
-            .header img {
-                margin-right: 0;
-                margin-bottom: 15px;
+            .form-section {
+                padding: 25px 30px;
             }
         }
 
         @media (max-width: 480px) {
+            header img {
+                height: 40px;
+            }
+
+            .form-section {
+                padding: 20px 20px;
+            }
+
             form button {
                 font-size: 16px;
                 padding: 14px 0;
             }
 
-            h1, h2 {
+            h2 {
                 font-size: 1.5em;
-            }
-
-            .header img {
-                max-width: 120px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header com Logo e Título -->
-        <div class="header">
-            <img src="https://firebasestorage.googleapis.com/v0/b/player-music-72d4d.appspot.com/o/img%2Ff24f2140-978a-4ae4-af06-8e13b5048c68.png?alt=media&token=3f919229-cd00-4a45-ab4a-4c90111b1473" alt="Logo">
-           
-        </div>
+    <!-- Header -->
+    <header>
+        <img src="https://firebasestorage.googleapis.com/v0/b/player-music-72d4d.appspot.com/o/img%2Ff24f2140-978a-4ae4-af06-8e13b5048c68.png?alt=media&token=3f919229-cd00-4a45-ab4a-4c90111b1473" alt="Logo">
+        <!-- Você pode adicionar links de navegação aqui, se necessário -->
+    </header>
 
-        <form id="emailForm">
-            <p>
-                <label for="file"><i class="fas fa-file-excel"></i> Upload da Planilha Excel:</label>
-                <input type="file" name="file" id="file" accept=".xlsx" required>
-                <div class="field-description">Selecione o arquivo Excel que contém a lista de destinatários, a planilha deve conter a tabela "Email"</div>
-            </p>
-            <p>
-                <label for="subject"><i class="fas fa-heading"></i> Assunto do E-mail:</label>
-                <input type="text" name="subject" id="subject" placeholder="Ex: Promoção Especial de Outubro" required>
-                <div class="field-description">Digite o assunto que aparecerá no e-mail enviado.</div>
-            </p>
-            <p>
-                <label for="email_body"><i class="fas fa-envelope-open-text"></i> Corpo do E-mail (HTML suportado):</label>
-                <textarea name="email_body" id="email_body" placeholder="Ex: &lt;h1&gt;Olá!&lt;/h1&gt;&lt;p&gt;Esta é uma promoção especial para você.&lt;/p&gt;" required></textarea>
-                <div class="field-description">
-                    Insira o conteúdo do e-mail. Você pode usar HTML para personalizar o formato.
-                    <br>
-                    Recomendamos fortemente que você faça o envio do e-mail formatado em HTML. Peça para o ChatGPT: "<strong>Por favor, formate esse texto para HTML de e-mail</strong>".
+    <!-- Main Content -->
+    <main>
+        <div class="form-section">
+            <h2>Envio de E-mails</h2>
+            <form id="emailForm">
+                <p>
+                    <label for="file"><i class="fas fa-file-excel"></i> Upload da Planilha Excel:</label>
+                    <input type="file" name="file" id="file" accept=".xlsx" required>
+                    <div class="field-description">Selecione o arquivo Excel que contém a lista de destinatários, a planilha deve conter a tabela "Email"</div>
+                </p>
+                <p>
+                    <label for="subject"><i class="fas fa-heading"></i> Assunto do E-mail:</label>
+                    <input type="text" name="subject" id="subject" placeholder="Ex: Promoção Especial de Outubro" required>
+                    <div class="field-description">Digite o assunto que aparecerá no e-mail enviado.</div>
+                </p>
+                <p>
+                    <label for="email_body"><i class="fas fa-envelope-open-text"></i> Corpo do E-mail (HTML suportado):</label>
+                    <textarea name="email_body" id="email_body" placeholder="Ex: &lt;h1&gt;Olá!&lt;/h1&gt;&lt;p&gt;Esta é uma promoção especial para você.&lt;/p&gt;" required></textarea>
+                    <div class="field-description">
+                        Insira o conteúdo do e-mail. Você pode usar HTML para personalizar o formato.
+                        <br>
+                        Recomendamos fortemente que você faça o envio do e-mail formatado em HTML. Peça para o ChatGPT: "<strong>Por favor, formate esse texto para HTML de e-mail</strong>".
+                    </div>
+                </p>
+                <p>
+                    <button type="submit"><i class="fas fa-paper-plane"></i> Enviar E-mails</button>
+                </p>
+            </form>
+
+            <div id="progressSection" class="hidden">
+                <h2>Progresso do Envio</h2>
+                <div class="progress-bar">
+                    <div class="progress-bar-inner" id="progressBar"></div>
                 </div>
-            </p>
-            <p>
-                <button type="submit"><i class="fas fa-paper-plane"></i> Enviar E-mails</button>
-            </p>
-        </form>
-
-        <div id="progressSection" class="hidden">
-            <h2>Progresso do Envio</h2>
-            <div class="progress-bar">
-                <div class="progress-bar-inner" id="progressBar"></div>
+                <p>Status: <span id="status">Aguardando...</span></p>
+                <p>E-mails Enviados: <span id="progress">0</span>/<span id="total">0</span></p>
+                <p>Último E-mail Enviado Para: <span id="last_email">N/A</span></p>
+                <p>Tempo Estimado Restante: <span id="eta">Calculando...</span></p>
             </div>
-            <p>Status: <span id="status">Aguardando...</span></p>
-            <p>E-mails Enviados: <span id="progress">0</span>/<span id="total">0</span></p>
-            <p>Último E-mail Enviado Para: <span id="last_email">N/A</span></p>
-            <p>Tempo Estimado Restante: <span id="eta">Calculando...</span></p>
         </div>
-    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 dde-lima. Todos os direitos reservados.
+    </footer>
 
     <script>
         const form = document.getElementById('emailForm');
