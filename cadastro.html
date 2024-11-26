@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Cadastrar-se</title>
     <style>
         /* Seu estilo CSS existente */
         html, body {
@@ -33,13 +33,23 @@
 
         .form-container img {
             width: 150px;
-            margin-bottom: auto;
+            margin-bottom: 20px;
         }
 
         .form-container h1 {
             font-size: 2rem;
             color: #d1a7ff;
             margin-bottom: 20px;
+        }
+
+        .input {
+            width: 100%;
+            padding: 10px;
+            background-color: #3a2661;
+            border: 1px solid #7700ff;
+            border-radius: 5px;
+            color: #ffffff;
+            margin-bottom: 10px;
         }
 
         .button {
@@ -61,16 +71,6 @@
             font-size: 1.1rem;
         }
 
-        .input {
-            width: 100%;
-            padding: 10px;
-            background-color: #3a2661;
-            border: 1px solid #7700ff;
-            border-radius: 5px;
-            color: #ffffff;
-            margin-bottom: 10px;
-        }
-
         .sign-in-link {
             margin-top: 20px;
             font-size: 0.9rem;
@@ -84,43 +84,43 @@
 </head>
 <body>
     <div class="form-container">
-        <img src="sua_logo.png" alt="Logo">
-        <h1>Faça Login</h1>
-        <form id="loginForm">
-            <input type="email" name="email" placeholder="Usuário*" class="input" required>
+        <img src="https://pagshield.io/_next/image?url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fplayer-music-72d4d.appspot.com%2Fo%2Fimg%252Ff24f2140-978a-4ae4-af06-8e13b5048c68.png%3Falt%3Dmedia%26token%3D3f919229-cd00-4a45-ab4a-4c90111b1473&w=256&q=75" alt="Logo">
+        <h1>Cadastrar-se</h1>
+        <form id="registerForm">
+            <input type="email" name="email" placeholder="E-mail*" class="input" required>
             <input type="password" name="password" placeholder="Senha*" class="input" required>
-            <button class="button submit-btn">Login</button>
+            <input type="password" name="confirm_password" placeholder="Confirme sua Senha*" class="input" required>
+            <button class="button submit-btn">Cadastrar</button>
         </form>
         <div class="sign-in-link">
-            Não tem uma conta? <a href="cadastro.html">Cadastre-se</a>
+            Já tem uma conta? Faça <a href="index.html">login</a>
         </div>
     </div>
 
-    <!-- Script JavaScript para lidar com o login -->
+    <!-- Script JavaScript para lidar com o cadastro -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
 
-            loginForm.addEventListener('submit', function(e) {
+            registerForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                const formData = new FormData(loginForm);
-                fetch('https://disparo-email.onrender.com/login', {
+                const formData = new FormData(registerForm);
+                fetch('https://disparo-email.onrender.com/register', {
                     method: 'POST',
-                    body: formData,
-                    credentials: 'include'  // Inclui cookies na solicitação
+                    body: formData
                 })
                 .then(response => response.json())
                 .then(data => {
                     if(data.message){
-                        // Redireciona para a página protegida
-                        window.location.href = 'disparo.html';
+                        alert('Cadastro realizado com sucesso!');
+                        window.location.href = 'index.html';
                     } else {
-                        alert(data.error || 'Erro ao fazer login.');
+                        alert(data.error || 'Erro ao realizar cadastro.');
                     }
                 })
                 .catch(error => {
                     console.error('Erro:', error);
-                    alert('Ocorreu um erro ao fazer login.');
+                    alert('Ocorreu um erro ao realizar cadastro.');
                 });
             });
         });
