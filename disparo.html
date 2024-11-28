@@ -10,7 +10,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     
-    <!-- Estilos para o Modal (Adicionar ao style.css ou dentro de uma tag <style>) -->
+    <!-- Estilos para o Modal e Navbar -->
     <style>
         /* Estilos do Modal */
         .modal {
@@ -73,7 +73,7 @@
             padding: 8px;
             margin-top: 5px;
             box-sizing: border-box;
-            border: 1px solid #ccc;
+            border: 1px solid #ffffff;
             border-radius: 4px;
         }
 
@@ -146,23 +146,84 @@
         }
 
         /* Estilização dos botões no header */
-        header button {
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color:rgba(0,0,0,0.5);;
+            padding: 10px 20px;
+            color: white;
+            position: relative;
+        }
+
+        header .logo {
+            height: 50px;
+        }
+
+        /* Contêiner dos links e botões */
+        .navbar-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-links #creditsSection {
+            margin-right: 20px;
+            padding: 10px;
+        }
+
+        .navbar-links button {
             margin-left: 10px;
             padding: 8px 12px;
-            background-color: #481957;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
 
-        header button:hover {
+        .navbar-links button:hover {
             background-color: #392c83;
         }
 
-        #creditsSection{
-            background-color: #481957;
-            padding: 10px;
+        /* Ícone de menu (hamburger) */
+        .navbar .icon {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Responsividade */
+        @media screen and (max-width: 768px) {
+            .navbar-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: #481957;
+                padding: 10px;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                z-index: 999;
+            }
+
+            .navbar-links.active {
+                display: flex;
+            }
+
+            .navbar-links #creditsSection {
+                margin: 0 0 10px 0;
+            }
+
+            .navbar .icon {
+                display: block;
+                color: white;
+            }
+        }
+
+        /* Adicionando transições suaves */
+        .navbar-links,
+        .navbar-links button {
+            transition: all 0.3s ease;
         }
     </style>
 </head>
@@ -211,15 +272,22 @@
         });
     </script>
 
-    <!-- Header -->
-    <header>
-        <img src="https://pagshield.io/_next/image?url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fplayer-music-72d4d.appspot.com%2Fo%2Fimg%252Ff24f2140-978a-4ae4-af06-8e13b5048c68.png%3Falt%3Dmedia%26token%3D3f919229-cd00-4a45-ab4a-4c90111b1473&w=256&q=75" alt="Logo">
-        <div id="creditsSection">
-            <h3>Saldo de Créditos: <span id="credits">0</span></h3>
+    <!-- Header Responsiva -->
+    <header class="navbar">
+        <img src="https://pagshield.io/_next/image?url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fplayer-music-72d4d.appspot.com%2Fo%2Fimg%252Ff24f2140-978a-4ae4-af06-8e13b5048c68.png%3Falt%3Dmedia%26token%3D3f919229-cd00-4a45-ab4a-4c90111b1473&w=256&q=75" alt="Logo" class="logo">
+        <!-- Ícone de menu para dispositivos móveis -->
+        <div class="icon" onclick="toggleNavbar()">
+            <i class="fas fa-bars"></i>
         </div>
-        <!-- Botão para abrir o modal de configuração de email -->
-        <button id="openEmailConfigModal" style="margin-right: 10px;"><i class="fas fa-cog"></i> Configuração de Email</button>
-        <button id="logoutButton">Logout</button>
+        <!-- Links e botões da navbar -->
+        <div class="navbar-links" id="navbarLinks">
+            <div id="creditsSection">
+                <h3>Saldo de Créditos: <span id="credits">0</span></h3>
+            </div>
+            <!-- Botão para abrir o modal de configuração de email -->
+            <button id="openEmailConfigModal"><i class="fas fa-cog"></i> Configuração de Email</button>
+            <button id="logoutButton">Logout</button>
+        </div>
     </header>
 
     <!-- Main Content -->
@@ -310,7 +378,7 @@
                     </div>
                     
                     <label for="from_name_modal">Nome de Exibição:</label>
-                    <input type="text" id="from_name_modal" name="from_name_modal" placeholder="nome da empresa ou o nome da oferta">
+                    <input type="text" id="from_name_modal" name="from_name_modal" placeholder="nome da empresa ou o nome da oferta" required>
                     
                     <button id="salvar" type="submit">Salvar Configuração</button>
                 </form>
@@ -324,6 +392,12 @@
         function closeEmailConfigModal() {
             const modal = document.getElementById('emailConfigModal');
             modal.style.display = 'none';
+        }
+
+        // Função para alternar o menu em dispositivos móveis
+        function toggleNavbar() {
+            const navbarLinks = document.getElementById('navbarLinks');
+            navbarLinks.classList.toggle('active');
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -481,17 +555,19 @@
                 .then(data => {
                     if(data.status === 'success'){
                         // Preenche os campos com as configurações atuais
-                        document.getElementById('smtp_server').value = data.smtp_server || '';
+                        document.getElementById('smtp_server').value = data.smtp_server || 'smtp.hostinger.com';
                         document.getElementById('smtp_port').value = data.smtp_port || 587;
                         document.getElementById('email_username').value = data.email_username || '';
                         document.getElementById('from_name_modal').value = data.from_name || '';
                         // O campo de senha permanece vazio por segurança
+                        document.getElementById('email_password').value = '';
                     } else {
-                        // Se não houver configurações, deixar os campos vazios
-                        document.getElementById('smtp_server').value = '';
+                        // Se não houver configurações, deixar os campos com valores padrão ou vazios
+                        document.getElementById('smtp_server').value = 'smtp.hostinger.com';
                         document.getElementById('smtp_port').value = 587;
                         document.getElementById('email_username').value = '';
                         document.getElementById('from_name_modal').value = '';
+                        document.getElementById('email_password').value = '';
                     }
                 })
                 .catch(error => {
