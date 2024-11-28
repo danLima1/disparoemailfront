@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <!-- Metadados e estilos -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
@@ -100,7 +101,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const loginForm = document.getElementById('loginForm');
-
+    
             loginForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const formData = new FormData(loginForm);
@@ -111,9 +112,14 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    console.log('User role:', data.role);  // Adiciona esta linha para depuração
                     if(data.message){
-                        // Redireciona para a página protegida
-                        window.location.href = 'disparo.html';
+                        // Verifica o papel do usuário e redireciona
+                        if(data.role === 'admin'){
+                            window.location.href = 'admin.html';
+                        } else {
+                            window.location.href = 'disparo.html';
+                        }
                     } else {
                         alert(data.error || 'Erro ao fazer login.');
                     }

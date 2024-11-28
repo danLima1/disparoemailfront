@@ -2,303 +2,13 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Disparo - PagShield</title>
-    <!-- Google Fonts -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
     <!-- Font Awesome para Ícones -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        /* Seu estilo CSS existente */
-        /* Reset de CSS */
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Estilos Gerais */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-image: url("https://img.freepik.com/fotos-premium/fundo-roxo-com-efeito-de-luz_884097-3.jpg");
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-            color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Header */
-        header {
-            width: 100%;
-            padding: 20px 40px;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-
-        header img {
-            height: 50px;
-        }
-
-        header button {
-            background: transparent;
-            border: 1px solid #fff;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background 0.3s ease;
-        }
-
-        header button:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Main Content */
-        main {
-            flex: 1;
-            padding: 100px 40px 40px; /* Espaço para o header fixo */
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        .form-section {
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 40px 50px;
-            max-width: 800px;
-            width: 100%;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            color: #ffffff;
-        }
-
-        .form-section h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            margin-bottom: 30px;
-            text-align: center;
-            font-size: 2em;
-        }
-
-        /* Formulário */
-        form p {
-            margin-bottom: 25px;
-            position: relative;
-        }
-
-        form label {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: #d1c4e9;
-            font-size: 1.1em;
-        }
-
-        form input[type="text"],
-        form input[type="file"],
-        form textarea {
-            width: 100%;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            background: rgba(0, 0, 0, 0.2);
-            color: #ffffff;
-            backdrop-filter: blur(5px);
-            transition: background 0.3s ease, color 0.3s ease;
-        }
-
-        form input[type="text"]::placeholder,
-        form textarea::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-            opacity: 1;
-        }
-
-        form input[type="file"]::file-selector-button {
-            background: rgb(43, 27, 78);
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            font-size: 0.9em;
-        }
-
-        form input[type="file"]::file-selector-button:hover {
-            background: #6a11cb;
-        }
-
-        form input[type="text"]:focus,
-        form input[type="file"]:focus,
-        form textarea:focus {
-            background: rgba(0, 0, 0, 0.3);
-            outline: none;
-        }
-
-        form textarea {
-            resize: vertical;
-            min-height: 180px;
-        }
-
-        /* Descrições de Campos */
-        .field-description {
-            font-size: 16px;
-            color: #ffffff;
-            margin-top: 5px;
-        }
-
-        /* Botão de Envio */
-        form button {
-            background: rgb(43, 27, 78);
-            color: #fff;
-            padding: 16px 0;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 18px;
-            width: 100%;
-            font-weight: 500;
-            transition: background 0.3s ease, transform 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        form button i {
-            margin-right: 8px;
-            transition: margin-right 0.3s ease;
-        }
-
-        form button:hover {
-            background: #6a11cb;
-            transform: translateY(-3px);
-        }
-
-        form button:hover i {
-            margin-right: 12px;
-        }
-
-        /* Seção de Progresso */
-        #progressSection {
-            margin-top: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 30px 40px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            transition: opacity 0.5s ease;
-            color: #ffffff;
-        }
-
-        #progressSection.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        #progressSection.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        #progressSection h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 1.8em;
-        }
-
-        #progressSection p {
-            font-size: 1.1em;
-            color: #d1c4e9;
-            margin-bottom: 15px;
-        }
-
-        #progressSection span {
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        /* Barra de Progresso */
-        .progress-bar {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
-
-        .progress-bar-inner {
-            height: 20px;
-            width: 0;
-            background: rgb(43, 27, 78);
-            transition: width 0.5s ease;
-        }
-
-        /* Footer */
-        footer {
-            width: 100%;
-            padding: 20px 40px;
-            background: rgba(0, 0, 0, 0.6);
-            text-align: center;
-            font-size: 0.9em;
-            color: #d1c4e9;
-        }
-
-        /* Responsividade */
-        @media (max-width: 1024px) {
-            main {
-                padding: 120px 20px 20px;
-            }
-
-            .form-section {
-                padding: 30px 40px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            header {
-                padding: 15px 20px;
-            }
-
-            main {
-                padding: 100px 20px 20px;
-            }
-
-            .form-section {
-                padding: 25px 30px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header img {
-                height: 40px;
-            }
-
-            .form-section {
-                padding: 20px 20px;
-            }
-
-            form button {
-                font-size: 16px;
-                padding: 14px 0;
-            }
-
-            h2 {
-                font-size: 1.5em;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Verificação de Autenticação -->
@@ -309,24 +19,48 @@
                 method: 'GET',
                 credentials: 'include'  // Inclui cookies na solicitação
             })
-            .then(response => response.json())
-            .then(data => {
-                if(data.status !== 'authenticated'){
-                    // Se não estiver autenticado, redireciona para login.html
-                    window.location.href = 'login.html';
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else if (response.status === 401) {
+                    // Usuário não autenticado, redirecionar para a página de login
+                    window.location.href = 'index.html';
+                    throw new Error('Usuário não autenticado.');
+                } else {
+                    throw new Error('Erro ao verificar a sessão.');
                 }
-                // Se estiver autenticado, continua carregando a página
+            })
+            .then(data => {
+                // Se estiver autenticado, obtém o saldo de créditos
+                fetch('https://disparo-email.onrender.com/get_my_credits', {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.credits !== undefined){
+                        document.getElementById('credits').innerText = data.credits;
+                    } else {
+                        alert('Erro ao obter saldo de créditos.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Ocorreu um erro ao obter o saldo de créditos.');
+                });
             })
             .catch(error => {
                 console.error('Erro:', error);
-                window.location.href = 'login.html';
             });
         });
     </script>
 
     <!-- Header -->
     <header>
-        <img src="https://pagshield.io/_next/image?url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fplayer-music-72d4d.appspot.com%2Fo%2Fimg%252Ff24f2140-978a-4ae4-af06-8e13b5048c68.png%3Falt%3Dmedia%26token%3D3f919229-cd00-4a45-ab4a-4c90111b1473&w=256&q=75" alt="Logo"> <!-- Substitua pelo caminho da sua logo -->
+        <img src="https://pagshield.io/_next/image?url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fplayer-music-72d4d.appspot.com%2Fo%2Fimg%252Ff24f2140-978a-4ae4-af06-8e13b5048c68.png%3Falt%3Dmedia%26token%3D3f919229-cd00-4a45-ab4a-4c90111b1473&w=256&q=75" alt="Logo">
+        <div id="creditsSection">
+            <h3>Saldo de Créditos: <span id="credits"></span></h3>
+        </div>
         <button id="logoutButton">Logout</button>
     </header>
 
@@ -404,7 +138,19 @@
                     body: formData,
                     credentials: 'include'  // Inclui cookies na solicitação
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else if (response.status === 401) {
+                        // Usuário não autenticado, redirecionar para a página de login
+                        window.location.href = 'index.html';
+                        throw new Error('Usuário não autenticado.');
+                    } else {
+                        return response.json().then(data => {
+                            throw new Error(data.error || 'Erro ao iniciar o envio dos e-mails.');
+                        });
+                    }
+                })
                 .then(data => {
                     if(data.error){
                         alert(data.error);
@@ -417,7 +163,7 @@
                 })
                 .catch(error => {
                     console.error('Erro:', error);
-                    alert('Ocorreu um erro ao iniciar o envio dos e-mails.');
+                    alert(error.message);
                 });
             });
 
@@ -426,7 +172,17 @@
                     method: 'GET',
                     credentials: 'include'  // Inclui cookies na solicitação
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else if (response.status === 401) {
+                        // Usuário não autenticado, redirecionar para a página de login
+                        window.location.href = 'index.html';
+                        throw new Error('Usuário não autenticado.');
+                    } else {
+                        throw new Error('Erro ao obter o progresso.');
+                    }
+                })
                 .then(data => {
                     if (data.status) {
                         statusSpan.innerText = data.status;
@@ -460,7 +216,6 @@
                 })
                 .catch(error => {
                     console.error('Erro:', error);
-                    alert('Ocorreu um erro ao atualizar o progresso.');
                 });
             }
 
@@ -470,17 +225,27 @@
                     method: 'POST',
                     credentials: 'include'  // Inclui cookies na solicitação
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else if (response.status === 401) {
+                        // Usuário não autenticado, redirecionar para a página de login
+                        window.location.href = 'index.html';
+                        throw new Error('Usuário não autenticado.');
+                    } else {
+                        throw new Error('Erro ao fazer logout.');
+                    }
+                })
                 .then(data => {
                     if(data.message){
-                        window.location.href = 'login.html';
+                        window.location.href = 'index.html';
                     } else {
                         alert(data.error || 'Erro ao fazer logout.');
                     }
                 })
                 .catch(error => {
                     console.error('Erro:', error);
-                    alert('Ocorreu um erro ao fazer logout.');
+                    alert(error.message);
                 });
             });
         });
