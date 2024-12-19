@@ -9,21 +9,20 @@
         /* Estilos Gerais */
         body {
             font-family: 'Roboto', sans-serif;
-            background-image: url("https://img.freepik.com/fotos-premium/fundo-roxo-com-efeito-de-luz_884097-3.jpg");
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             color: #ffffff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            line-height: 1.6;
         }
 
-        /* Header */
-        header {
+        /* Header/Navbar */
+        .navbar {
             width: 100%;
-            padding: 20px 40px;
-            background: rgba(0, 0, 0, 0.6);
+            padding: 15px 40px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -31,45 +30,87 @@
             top: 0;
             left: 0;
             z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
-        header img {
-            height: 50px;
+        .logo {
+            height: 40px;
+            transition: transform 0.3s ease;
         }
 
-        header button {
-            background: transparent;
-            border: 1px solid #fff;
-            color: #fff;
-            padding: 10px 20px;
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .navbar-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #creditsSection {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
             border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background 0.3s ease;
+            margin-right: 10px;
         }
 
-        header button:hover {
-            background: rgba(255, 255, 255, 0.2);
+        #creditsSection h3 {
+            font-size: 0.9em;
+            color: #fff;
+            margin: 0;
+        }
+
+        #credits {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .navbar button {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navbar button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        #logoutButton {
+            background: rgba(220, 53, 69, 0.1);
+            border-color: #dc3545;
+        }
+
+        #logoutButton:hover {
+            background: rgba(220, 53, 69, 0.2);
         }
 
         /* Main Content */
         main {
             flex: 1;
-            padding: 100px 40px 40px; /* Espaço para o header fixo */
+            padding: 100px 40px 40px;
             display: flex;
             justify-content: center;
             align-items: flex-start;
         }
 
         .form-section {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 40px 50px;
+            border-radius: 15px;
+            padding: 40px;
             max-width: 800px;
             width: 100%;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            color: #ffffff;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .form-section h2 {
@@ -77,213 +118,230 @@
             margin-bottom: 30px;
             text-align: center;
             font-size: 2em;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        /* Formulário */
+        /* Form Elements */
         form p {
             margin-bottom: 25px;
-            position: relative;
         }
 
         form label {
             display: block;
             font-weight: 500;
             margin-bottom: 8px;
-            color: #d1c4e9;
-            font-size: 1.1em;
+            color: #fff;
+            font-size: 0.95em;
         }
 
         form input[type="text"],
-        form input[type="file"],
+        form input[type="email"],
+        form input[type="password"],
+        form input[type="number"],
         form textarea {
             width: 100%;
-            padding: 14px 20px;
-            border: none;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
-            font-size: 16px;
-            background: rgba(0, 0, 0, 0.2);
-            color: #ffffff;
-            backdrop-filter: blur(5px);
-            transition: background 0.3s ease, color 0.3s ease;
+            color: #fff;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
         }
 
-        form input[type="text"]::placeholder,
-        form textarea::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-            opacity: 1;
+        form input:focus,
+        form textarea:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        form input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            cursor: pointer;
         }
 
         form input[type="file"]::file-selector-button {
-            background: rgb(43, 27, 78);
+            background: #4CAF50;
             color: #fff;
+            padding: 8px 16px;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background 0.3s ease;
-            font-size: 0.9em;
+            transition: all 0.3s ease;
         }
 
         form input[type="file"]::file-selector-button:hover {
-            background: #6a11cb;
+            background: #45a049;
         }
 
-        form input[type="text"]:focus,
-        form input[type="file"]:focus,
-        form textarea:focus {
-            background: rgba(0, 0, 0, 0.3);
-            outline: none;
-        }
-
-        form textarea {
-            resize: vertical;
-            min-height: 180px;
-        }
-
-        /* Descrições de Campos */
-        .field-description {
-            font-size: 16px;
-            color: #ffffff;
-            margin-top: 5px;
-        }
-
-        /* Botão de Envio */
-        form button {
-            background: rgb(43, 27, 78);
-            color: #fff;
-            padding: 16px 0;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 18px;
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            font-weight: 500;
-            transition: background 0.3s ease, transform 0.2s ease;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1100;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            background: #1a1a2e;
+            margin: 50px auto;
+            padding: 0;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px 15px 0 0;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
         }
 
-        form button i {
-            margin-right: 8px;
-            transition: margin-right 0.3s ease;
+        .modal-header h2 {
+            margin: 0;
+            color: #fff;
+            font-size: 1.5em;
         }
 
-        form button:hover {
-            background: #6a11cb;
-            transform: translateY(-3px);
+        .close-modal {
+            color: #fff;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
         }
 
-        form button:hover i {
-            margin-right: 12px;
+        .close-modal:hover {
+            color: #dc3545;
         }
 
-        /* Seção de Progresso */
+        .modal-body {
+            padding: 20px;
+        }
+
+        .email-warning {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .message-container {
+            margin-bottom: 20px;
+        }
+
+        .message-container p {
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .message-container p.success {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            color: #4CAF50;
+        }
+
+        .message-container p.error {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            color: #dc3545;
+        }
+
+        /* Progress Section */
         #progressSection {
             margin-top: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 30px 40px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            transition: opacity 0.5s ease;
-            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
         }
 
-        #progressSection.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        #progressSection.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        #progressSection h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 1.8em;
-        }
-
-        #progressSection p {
-            font-size: 1.1em;
-            color: #d1c4e9;
-            margin-bottom: 15px;
-        }
-
-        #progressSection span {
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        /* Barra de Progresso */
         .progress-bar {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
             overflow: hidden;
-            margin-bottom: 15px;
+            margin: 20px 0;
         }
 
         .progress-bar-inner {
-            height: 20px;
-            width: 0;
-            background: rgb(43, 27, 78);
-            transition: width 0.5s ease;
+            height: 10px;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            transition: width 0.3s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .navbar-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                padding: 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .navbar-links.active {
+                display: flex;
+            }
+
+            .icon {
+                display: block;
+                font-size: 24px;
+                cursor: pointer;
+            }
+
+            main {
+                padding: 100px 20px 40px;
+            }
+
+            .form-section {
+                padding: 30px 20px;
+            }
         }
 
         /* Footer */
         footer {
-            width: 100%;
-            padding: 20px 40px;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.8);
+            color: rgba(255, 255, 255, 0.7);
             text-align: center;
-            font-size: 0.9em;
-            color: #d1c4e9;
-        }
-
-        /* Responsividade */
-        @media (max-width: 1024px) {
-            main {
-                padding: 120px 20px 20px;
-            }
-
-            .form-section {
-                padding: 30px 40px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            header {
-                padding: 15px 20px;
-            }
-
-            main {
-                padding: 100px 20px 20px;
-            }
-
-            .form-section {
-                padding: 25px 30px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header img {
-                height: 20px;
-            }
-
-            .form-section {
-                padding: 20px 20px;
-            }
-
-            form button {
-                font-size: 16px;
-                padding: 14px 0;
-            }
-
-            h2 {
-                font-size: 1.5em;
-            }
+            padding: 20px;
+            margin-top: auto;
         }
