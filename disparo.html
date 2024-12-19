@@ -28,42 +28,45 @@
                 if (!token) {
                     // Se não há token, redireciona para a página de login
                     window.location.href = 'index.html';
-                } else {
-                    // Verifica se o token é válido
-                    fetch('https://disparo-email.onrender.com/check_token', { // Atualize para a URL do seu backend
-                        method: 'GET',
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            return response.json();
-                        } else {
-                            // Se o token for inválido ou expirado, remove e redireciona
-                            localStorage.removeItem('access_token');
-                            localStorage.removeItem('user_role');
-                            window.location.href = 'index.html';
-                            throw new Error('Token inválido ou expirado.');
-                        }
-                    })
-                    .then(data => {
-                        console.log('Token válido:', data);
-                        if(data.status === 'authenticated'){
-                            // Opcional: Armazena o papel do usuário se necessário
-                            localStorage.setItem('user_role', data.user.role);
-                            getCredits(token);
-                        } else {
-                            // Caso contrário, redireciona para login
-                            localStorage.removeItem('access_token');
-                            localStorage.removeItem('user_role');
-                            window.location.href = 'index.html';
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erro:', error);
-                    });
+                    return;
                 }
+
+                // Verifica se o token é válido
+                fetch('https://disparo-email.onrender.com/check_token', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(async response => {
+                    const data = await response.json().catch(() => ({}));
+                    if (!response.ok) {
+                        const error = data.error || 'Token inválido ou expirado';
+                        console.error('Erro na resposta:', error);
+                        throw new Error(error);
+                    }
+                    return data;
+                })
+                .then(data => {
+                    console.log('Resposta do servidor:', data);
+                    if (data.status === 'authenticated' && data.user) {
+                        localStorage.setItem('user_role', data.user.role);
+                        localStorage.setItem('user_email', data.user.email);
+                        getCredits(token);
+                    } else {
+                        throw new Error('Resposta inválida do servidor');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro na verificação do token:', error);
+                    localStorage.removeItem('access_token');
+                    localStorage.removeItem('user_role');
+                    localStorage.removeItem('user_email');
+                    alert(error.message);
+                    window.location.href = 'index.html';
+                });
             }
 
             // Função para obter o saldo de créditos
