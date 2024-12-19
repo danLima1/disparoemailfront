@@ -1,141 +1,126 @@
+<!-- disparo.html -->
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <!-- Metadados e estilos -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Disparo de E-mails</title>
     <style>
-        /* Seu estilo CSS existente */
-        html, body {
-            margin: 0;
-            padding: 0;
+        /* Adicione seus estilos CSS aqui */
+        /* Exemplo simples */
+        body {
             font-family: Arial, sans-serif;
-            background-image: url("https://img.freepik.com/fotos-premium/fundo-roxo-com-efeito-de-luz_884097-3.jpg");
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow-x: hidden;
+            padding: 20px;
+            background-color: #f4f4f4;
         }
 
-        .form-container {
-            background-color: rgba(0, 0, 0, 0.3);
-            padding: 40px;
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
             border-radius: 8px;
-            width: 400px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
-        .form-container img {
-            width: 150px;
-            margin-bottom: auto;
-        }
-
-        .form-container h1 {
-            font-size: 2rem;
-            color: #d1a7ff;
-            margin-bottom: 20px;
+        
+        .input, .button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
 
         .button {
-            display: block;
-            width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-            text-align: center;
-            border-radius: 5px;
-            border: none;
-            font-size: 1rem;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .submit-btn {
-            background: linear-gradient(to right, #8a47d3, #5c2a91);
+            background-color: #5c2a91;
             color: white;
-            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
         }
 
-        .input {
-            width: 100%;
-            padding: 10px;
-            background-color: #3a2661;
-            border: 1px solid #7700ff;
-            border-radius: 5px;
-            color: #ffffff;
-            margin-bottom: 10px;
-        }
-
-        .sign-in-link {
-            margin-top: 20px;
-            font-size: 0.9rem;
-        }
-
-        .sign-in-link a {
-            color: #d1a7ff;
-            text-decoration: none;
+        .button:hover {
+            background-color: #8a47d3;
         }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <img src="https://firebasestorage.googleapis.com/v0/b/player-music-72d4d.appspot.com/o/img%2Ff24f2140-978a-4ae4-af06-8e13b5048c68.png?alt=media&token=3f919229-cd00-4a45-ab4a-4c90111b1473" alt="Logo">
-        <h1>Faça Login</h1>
-        <form id="loginForm">
-            <input type="email" name="email" placeholder="Usuário*" class="input" required>
-            <input type="password" name="password" placeholder="Senha*" class="input" required>
-            <button class="button submit-btn">Login</button>
+    <div class="container">
+        <h2>Iniciar Disparo de E-mails</h2>
+        <form id="dispatchForm">
+            <input type="text" name="subject" placeholder="Assunto*" class="input" required>
+            <textarea name="email_body" placeholder="Corpo do E-mail*" class="input" required></textarea>
+            <input type="text" name="from_name" placeholder="Nome do Remetente*" class="input" required>
+            <input type="file" name="file" accept=".xlsx, .xls" class="input" required>
+            <button type="submit" class="button">Iniciar Disparo</button>
         </form>
-        <div class="sign-in-link">
-            Não tem uma conta? <a href="cadastro.html">Cadastre-se</a>
-        </div>
+        <div id="status"></div>
     </div>
 
-    <!-- Script JavaScript para lidar com o login -->
     <script>
-       document.addEventListener('DOMContentLoaded', function() {
-    const loginForm = document.getElementById('loginForm');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verifica se o token existe
+            const token = localStorage.getItem('access_token');
+            const userRole = localStorage.getItem('user_role');
 
-    loginForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(loginForm);
-        fetch('https://disparo-email.onrender.com/login', {
-            method: 'POST',
-            body: formData,
-            credentials: 'include'  // Inclui cookies na solicitação
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erro na resposta da rede');
+            if (!token) {
+                // Redireciona para a página de login se o token não estiver presente
+                window.location.href = 'login.html';
             }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Resposta do servidor:', data);  // Para depuração
-            if(data.message){
-                // Verifica o papel do usuário e redireciona
-                if(data.role === 'admin'){
-                    window.location.href = 'admin.html';
-                } else {
-                    window.location.href = 'disparo.html';
-                }
-            } else {
-                alert(data.error || 'Erro ao fazer login.');
+
+            const dispatchForm = document.getElementById('dispatchForm');
+            const statusDiv = document.getElementById('status');
+
+            dispatchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(dispatchForm);
+
+                fetch('https://disparo-email.onrender.com/start_dispatch', {  // Atualize para a URL do seu backend
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.message){
+                        statusDiv.innerHTML = `<p>${data.message} Total: ${data.total}</p>`;
+                        // Você pode iniciar uma função para monitorar o progresso
+                    } else {
+                        alert(data.error || 'Erro ao iniciar o disparo.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Ocorreu um erro ao iniciar o disparo.');
+                });
+            });
+
+            // Exemplo de função para verificar o progresso
+            function checkProgress() {
+                fetch('https://disparo-email.onrender.com/progress', {  // Atualize para a URL do seu backend
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.status){
+                        statusDiv.innerHTML += `<p>Status: ${data.status}, Progresso: ${data.progress}/${data.total}, Último E-mail: ${data.last_email}</p>`;
+                    } else {
+                        console.log(data.error || 'Erro ao obter o progresso.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
             }
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-            alert('Ocorreu um erro ao fazer login.');
+
+            // Atualiza o progresso a cada 60 segundos
+            setInterval(checkProgress, 60000);
         });
-    });
-});
-
     </script>
 </body>
 </html>
