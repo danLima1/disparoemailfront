@@ -1,125 +1,117 @@
-<!-- disparo.html -->
-
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disparo de E-mails</title>
+    <title>Login - PagShield</title>
     <style>
-        /* Adicione seus estilos CSS aqui */
-        /* Exemplo simples */
+        /* Estilos básicos para o formulário de login */
         body {
             font-family: Arial, sans-serif;
-            padding: 20px;
             background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: #fff;
-            padding: 30px;
+        .login-container {
+            background-color: #fff;
+            padding: 40px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 400px;
+            text-align: center;
         }
-        
-        .input, .button {
+
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #5c2a91;
+        }
+
+        .input {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
-            border-radius: 5px;
             border: 1px solid #ccc;
+            border-radius: 4px;
         }
 
         .button {
+            width: 100%;
+            padding: 12px;
             background-color: #5c2a91;
             color: white;
             border: none;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
         }
 
         .button:hover {
             background-color: #8a47d3;
         }
+
+        .message {
+            margin-top: 15px;
+            color: red;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Iniciar Disparo de E-mails</h2>
-        <form id="dispatchForm">
-            <input type="text" name="subject" placeholder="Assunto*" class="input" required>
-            <textarea name="email_body" placeholder="Corpo do E-mail*" class="input" required></textarea>
-            <input type="text" name="from_name" placeholder="Nome do Remetente*" class="input" required>
-            <input type="file" name="file" accept=".xlsx, .xls" class="input" required>
-            <button type="submit" class="button">Iniciar Disparo</button>
+    <div class="login-container">
+        <h2>Faça Login</h2>
+        <form id="loginForm">
+            <input type="email" name="email" placeholder="Email" class="input" required>
+            <input type="password" name="password" placeholder="Senha" class="input" required>
+            <button type="submit" class="button">Login</button>
         </form>
-        <div id="status"></div>
+        <div id="message" class="message"></div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Verifica se o token existe
-            const token = localStorage.getItem('access_token');
-            const userRole = localStorage.getItem('user_role');
+            const loginForm = document.getElementById('loginForm');
+            const messageDiv = document.getElementById('message');
 
-            if (!token) {
-                // Redireciona para a página de login se o token não estiver presente
-                window.location.href = 'index.html';
-            }
-
-            const dispatchForm = document.getElementById('dispatchForm');
-            const statusDiv = document.getElementById('status');
-
-            dispatchForm.addEventListener('submit', function(e) {
+            loginForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                const formData = new FormData(dispatchForm);
-
-                fetch('https://disparo-email.onrender.com/start_dispatch', {  // Atualize para a URL do seu backend
+                const formData = new FormData(loginForm);
+                fetch('https://disparo-email.onrender.com/login', { // Atualize para a URL do seu backend
                     method: 'POST',
                     body: formData,
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw err; });
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    if(data.message){
-                        statusDiv.innerHTML = `<p>${data.message} Total: ${data.total}</p>`;
-                        // Você pode iniciar uma função para monitorar o progresso
+                    if(data.access_token){
+                        // Armazena o token no localStorage
+                        localStorage.setItem('access_token', data.access_token);
+                        localStorage.setItem('user_role', data.role);  // Armazena o papel do usuário
+
+                        // Redireciona com base no papel do usuário
+                        if(data.role === 'admin'){
+                            window.location.href = 'admin.html';
+                        } else {
+                            window.location.href = 'disparo.html';
+                        }
                     } else {
-                        alert(data.error || 'Erro ao iniciar o disparo.');
+                        messageDiv.innerText = data.error || 'Erro ao fazer login.';
+                        messageDiv.style.color = 'red';
                     }
                 })
                 .catch(error => {
                     console.error('Erro:', error);
-                    alert('Ocorreu um erro ao iniciar o disparo.');
+                    messageDiv.innerText = error.error || 'Ocorreu um erro ao fazer login.';
+                    messageDiv.style.color = 'red';
                 });
             });
-
-            // Exemplo de função para verificar o progresso
-            function checkProgress() {
-                fetch('https://disparo-email.onrender.com/progress', {  // Atualize para a URL do seu backend
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if(data.status){
-                        statusDiv.innerHTML += `<p>Status: ${data.status}, Progresso: ${data.progress}/${data.total}, Último E-mail: ${data.last_email}</p>`;
-                    } else {
-                        console.log(data.error || 'Erro ao obter o progresso.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro:', error);
-                });
-            }
-
-            // Atualiza o progresso a cada 60 segundos
-            setInterval(checkProgress, 60000);
         });
     </script>
 </body>
