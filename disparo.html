@@ -146,7 +146,11 @@
                     </div>
                 </p>
                 <p>
-                    <button type="submit" class="button"><i class="fas fa-paper-plane"></i> Enviar E-mails</button>
+                    <button type="submit" class="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Enviar E-mails</span>
+                        <div class="hover-effect"></div>
+                    </button>
                 </p>
             </form>
 
@@ -172,40 +176,62 @@
     <div id="emailConfigModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Configuração de Email</h2>
-                <span class="close-modal" onclick="closeEmailConfigModal()">&times;</span>
+                <h2><i class="fas fa-cog"></i> Configuração de Email</h2>
+                <span class="close-modal">&times;</span>
             </div>
             <div class="modal-body">
-                <!-- Aviso Adicionado -->
                 <div class="email-warning">
-                    Recomendamos fortemente que você utilize um email profissional pago da Hostinger, pois ele possui dupla verificação contra spam, não nos responsabilizamos caso você utilize outro e-mail e a ferramenta não funcione como o esperado. Caso o seu email não seja da Hostinger, substitua os valores do servidor SMTP pela configuração correta do seu email. Para isso, pesquise no Google. A porta SMTP deixe a padrão (587).
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Importante:</strong> Recomendamos o uso de email profissional da Hostinger para melhor desempenho. 
+                    Outros provedores podem requerer configurações SMTP específicas.
                 </div>
-                <!-- Contêiner de Mensagens -->
+                
                 <div id="emailConfigMessage" class="message-container"></div>
+                
                 <form id="emailConfigForm">
-                    <label for="smtp_server">Servidor SMTP:</label>
-                    <input type="text" id="smtp_server" name="smtp_server" value="smtp.hostinger.com" required>
-                    
-                    <label for="smtp_port">Porta SMTP:</label>
-                    <input type="number" id="smtp_port" name="smtp_port" value="587" required>
-                    
-                    <label for="email_username">Email (usuário):</label>
-                    <input type="email" id="email_username" name="email_username" required>
-                    
-                    <label for="email_password">Senha do Email (ou senha de aplicativo para e-mails Google):</label>
-                    <div class="password-container">
-                        <input type="password" id="email_password" name="email_password" placeholder="******" required>
-                        <svg id="toggle_password_icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#888" class="toggle-password">
-                            <!-- Ícone de Olho Aberto -->
-                            <path d="M0 0h24v24H0z" fill="none"/>
-                            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 13c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
-                        </svg>
+                    <div class="form-group">
+                        <label for="smtp_server">
+                            <i class="fas fa-server"></i> Servidor SMTP
+                        </label>
+                        <input type="text" id="smtp_server" name="smtp_server" value="smtp.hostinger.com" required>
                     </div>
                     
-                    <label for="from_name_modal">Nome de Exibição:</label>
-                    <input type="text" id="from_name_modal" name="from_name_modal" placeholder="nome da empresa ou o nome da oferta" required>
+                    <div class="form-group">
+                        <label for="smtp_port">
+                            <i class="fas fa-plug"></i> Porta SMTP
+                        </label>
+                        <input type="number" id="smtp_port" name="smtp_port" value="587" required>
+                    </div>
                     
-                    <button id="salvar" type="submit">Salvar Configuração</button>
+                    <div class="form-group">
+                        <label for="email_username">
+                            <i class="fas fa-envelope"></i> Email (usuário)
+                        </label>
+                        <input type="email" id="email_username" name="email_username" placeholder="seu@email.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email_password">
+                            <i class="fas fa-lock"></i> Senha do Email
+                        </label>
+                        <div class="password-input">
+                            <input type="password" id="email_password" name="email_password" placeholder="Digite sua senha" required>
+                            <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="from_name_modal">
+                            <i class="fas fa-user"></i> Nome de Exibição
+                        </label>
+                        <input type="text" id="from_name_modal" name="from_name_modal" placeholder="Nome da empresa ou campanha" required>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-save"></i> Salvar Configuração
+                    </button>
                 </form>
             </div>
         </div>
