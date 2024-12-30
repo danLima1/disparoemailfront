@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Builder - PagShield</title>
+    
+    <!-- GrapesJS -->
+    <link rel="stylesheet" href="https://unpkg.com/grapesjs@0.20.3/dist/css/grapes.min.css">
+    <script src="https://unpkg.com/grapesjs@0.20.3"></script>
+    <script src="https://unpkg.com/grapesjs-preset-newsletter@1.0.1"></script>
+    <script src="https://unpkg.com/grapesjs-preset-webpage@1.0.2"></script>
+    <script src="https://unpkg.com/grapesjs-blocks-basic@1.0.1"></script>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+        }
+        #gjs {
+            height: 100vh;
+        }
+        .gjs-block {
+            padding: 0 10px;
+            width: auto !important;
+            height: auto !important;
+            min-height: 45px;
+            margin: 5px 2.5% !important;
+            cursor: move;
+            text-align: center;
+            color: #444;
+        }
+        .gjs-block:hover {
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+        }
+        .panel__top {
+            padding: 0;
+            width: 100%;
+            display: flex;
+            position: initial;
+            justify-content: center;
+            justify-content: space-between;
+        }
+        .panel__basic-actions {
+            position: initial;
+            width: 100%;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div id="gjs">
+        <h1>Bem-vindo ao Email Builder</h1>
+        <p>Arraste os elementos para criar seu email!</p>
+    </div>
+
+    <script>
+        const editor = grapesjs.init({
+            container: '#gjs',
+            fromElement: true,
+            height: '100%',
+            width: 'auto',
+            plugins: ['gjs-preset-newsletter', 'gjs-preset-webpage', 'gjs-blocks-basic'],
+            pluginsOpts: {
+                'gjs-preset-newsletter': {
+                    modalTitleImport: 'Importar HTML',
+                    modalLabelImport: 'Cole seu HTML aqui:',
+                    modalBtnImport: 'Importar',
+                    modalTitleExport: 'Exportar HTML',
+                    modalLabelExport: 'Copie o HTML:',
+                    modalBtnExport: 'Copiar',
+                }
+            },
+            blockManager: {
+                appendTo: '#blocks',
+                blocks: [
+                    {
+                        id: 'section',
+                        label: 'Seção',
+                        category: 'Básico',
+                        content: `
+                            <table style="width:100%; padding: 10px;">
+                                <tr><td>Nova Seção</td></tr>
+                            </table>
+                        `,
+                    },
+                    {
+                        id: 'text',
+                        label: 'Texto',
+                        category: 'Básico',
+                        content: '<div data-gjs-type="text">Insira seu texto aqui</div>',
+                    },
+                    {
+                        id: 'image',
+                        label: 'Imagem',
+                        category: 'Básico',
+                        content: { type: 'image' },
+                        activate: true,
+                    },
+                    {
+                        id: 'button',
+                        label: 'Botão',
+                        category: 'Básico',
+                        content: `
+                            <a href="#" class="button">Clique Aqui</a>
+                            <style>
+                                .button {
+                                    display: inline-block;
+                                    padding: 10px 20px;
+                                    background-color: #4CAF50;
+                                    color: white;
+                                    text-decoration: none;
+                                    border-radius: 5px;
+                                }
+                            </style>
+                        `,
+                    },
+                    {
+                        id: 'divider',
+                        label: 'Divisor',
+                        category: 'Básico',
+                        content: '<hr style="border-top: 2px solid #ccc;">',
+                    },
+                    {
+                        id: 'spacer',
+                        label: 'Espaçador',
+                        category: 'Básico',
+                        content: '<div style="height: 50px;"></div>',
+                    },
+                    {
+                        id: 'quote',
+                        label: 'Citação',
+                        category: 'Básico',
+                        content: '<blockquote style="border-left: 5px solid #ccc; padding-left: 15px; margin: 10px 0;">Sua citação aqui</blockquote>',
+                    },
+                ]
+            },
+            styleManager: {
+                appendTo: '.styles-container',
+                sectors: [
+                    {
+                        name: 'Dimensões',
+                        open: false,
+                        properties: [
+                            'width',
+                            'height',
+                            'padding',
+                            'margin',
+                        ],
+                    },
+                    {
+                        name: 'Tipografia',
+                        open: false,
+                        properties: [
+                            'font-family',
+                            'font-size',
+                            'font-weight',
+                            'letter-spacing',
+                            'color',
+                            'line-height',
+                            'text-align',
+                            'text-decoration',
+                            'text-shadow',
+                        ],
+                    },
+                    {
+                        name: 'Decorações',
+                        open: false,
+                        properties: [
+                            'background-color',
+                            'border',
+                            'border-radius',
+                            'box-shadow',
+                        ],
+                    },
+                ],
+            },
+            canvas: {
+                styles: [
+                    'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css',
+                ],
+            },
+            storageManager: {
+                type: 'local',
+                autosave: true,
+                autoload: true,
+                stepsBeforeSave: 1,
+            },
+            panels: {
+                defaults: [
+                    {
+                        id: 'panel-devices',
+                        el: '.panel__devices',
+                        buttons: [
+                            {
+                                id: 'device-desktop',
+                                label: 'Desktop',
+                                command: 'set-device-desktop',
+                                active: true,
+                                togglable: false,
+                            },
+                            {
+                                id: 'device-mobile',
+                                label: 'Mobile',
+                                command: 'set-device-mobile',
+                                togglable: false,
+                            }
+                        ],
+                    }
+                ]
+            }
+        });
+
+        // Tradução dos labels
+        editor.I18n.addMessages({
+            pt: {
+                styleManager: {
+                    properties: {
+                        'background-color': 'Cor de Fundo',
+                        'color': 'Cor do Texto',
+                        'font-size': 'Tamanho da Fonte',
+                        'font-family': 'Fonte',
+                        'border-radius': 'Borda Arredondada',
+                        'border': 'Borda',
+                        'padding': 'Espaçamento Interno',
+                        'margin': 'Margem',
+                        'text-align': 'Alinhamento',
+                    }
+                }
+            }
+        });
+
+        // Configurações adicionais
+        editor.on('component:selected', () => {
+            const selectedComponent = editor.getSelected();
+            if (selectedComponent) {
+                selectedComponent.set('draggable', true);
+                selectedComponent.set('resizable', true);
+            }
+        });
+    </script>
+</body>
+</html>
