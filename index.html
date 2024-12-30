@@ -4,17 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Login - PagShield</title>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
     <div class="login-container">
-        <h2>Faça Login</h2>
+        <h2><i class="fas fa-shield-alt me-2"></i>Login</h2>
         <form id="loginForm">
-            <input type="email" name="email" placeholder="Email" class="input" required>
-            <input type="password" name="password" placeholder="Senha" class="input" required>
-            <button type="submit" class="button">Login</button>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" name="email" placeholder="Seu email" class="input" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Sua senha" class="input" required>
+            </div>
+            <button type="submit" class="button">
+                <i class="fas fa-sign-in-alt me-2"></i>Entrar
+            </button>
         </form>
         <div id="message" class="message"></div>
     </div>
