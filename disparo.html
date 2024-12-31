@@ -20,6 +20,129 @@
         #progressSection:not(.hidden) {
             opacity: 1;
         }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .navbar-nav {
+                margin-bottom: 1rem;
+            }
+            
+            #creditsSection {
+                margin: 1rem 0;
+                text-align: center;
+            }
+            
+            #openEmailConfigModal, #logoutButton {
+                width: 100%;
+                margin: 0.5rem 0 !important;
+            }
+
+            .stats-card {
+                margin-bottom: 1rem;
+            }
+
+            .card {
+                margin: 1rem;
+            }
+
+            .btn-lg {
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            .card-body {
+                padding: 1rem;
+            }
+
+            .stats-card {
+                padding: 0.5rem;
+            }
+
+            .stats-card h2 {
+                font-size: 1.2rem;
+            }
+
+            .stats-card h5 {
+                font-size: 0.9rem;
+            }
+
+            #progressSection .row > div {
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* General improvements */
+        .stats-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 100%;
+            transition: transform 0.2s;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .progress {
+            height: 1.5rem;
+            border-radius: 0.75rem;
+        }
+
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .form-control {
+            border-radius: 8px;
+        }
+
+        .btn {
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Modal responsiveness */
+        .modal-content {
+            max-width: 90%;
+            margin: 20px auto;
+            padding: 1rem;
+        }
+
+        @media (max-width: 576px) {
+            .modal-content {
+                max-width: 95%;
+                margin: 10px auto;
+                padding: 0.5rem;
+            }
+        }
     </style>
 </head>
 <body>
