@@ -270,7 +270,7 @@
             let noMoreUsers = false;
 
             // Verificação de Autenticação e Privilégios de Administrador
-            fetch('https://disparo-68c7349b4b0a.herokuapp.com/check_session', {
+            fetch('https://disparo-89ad0ee329c4.herokuapp.com/check_session', {
                 method: 'GET',
                 credentials: 'include'
             })
@@ -301,7 +301,7 @@
                 loadMoreBtn.disabled = true;
                 loadMoreBtn.textContent = 'Carregando...';
 
-                fetch(`https://disparo-68c7349b4b0a.herokuapp.com/admin/users?limit=${limit}&offset=${offset}`, {
+                fetch(`https://disparo-89ad0ee329c4.herokuapp.com/admin/users?limit=${limit}&offset=${offset}`, {
                     method: 'GET',
                     credentials: 'include'
                 })
@@ -360,7 +360,7 @@
                     return;
                 }
 
-                fetch('https://disparo-68c7349b4b0a.herokuapp.com/admin/add_credits', {
+                fetch('https://disparo-89ad0ee329c4.herokuapp.com/admin/add_credits', {
                     method: 'POST',
                     credentials: 'include',
                     headers: {

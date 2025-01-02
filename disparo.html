@@ -280,7 +280,7 @@
                 }
 
                 // Verifica se o token é válido
-                fetch('https://disparo-68c7349b4b0a.herokuapp.com/check_token', {
+                fetch('https://disparo-89ad0ee329c4.herokuapp.com/check_token', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -319,7 +319,7 @@
 
             // Função para obter o saldo de créditos
             function getCredits(token){
-                fetch('https://disparo-68c7349b4b0a.herokuapp.com/get_my_credits', { // Atualize para a URL do seu backend
+                fetch('https://disparo-89ad0ee329c4.herokuapp.com/get_my_credits', { // Atualize para a URL do seu backend
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`
@@ -443,7 +443,7 @@
                 const token = localStorage.getItem('access_token');
 
                 try {
-                    const response = await fetch('https://disparo-68c7349b4b0a.herokuapp.com/start_dispatch', {
+                    const response = await fetch('https://disparo-89ad0ee329c4.herokuapp.com/start_dispatch', {
                         method: 'POST',
                         headers: {
                             'Authorization': `Bearer ${token}`
@@ -473,7 +473,7 @@
             });
 
             function updateProgress(){
-                fetch('https://disparo-68c7349b4b0a.herokuapp.com/progress', { // Atualize para a URL do seu backend
+                fetch('https://disparo-89ad0ee329c4.herokuapp.com/progress', { // Atualize para a URL do seu backend
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`
@@ -543,7 +543,7 @@
 
             openModalButton.addEventListener('click', function() {
                 // Antes de abrir, busca as configurações atuais
-                fetch('https://disparo-68c7349b4b0a.herokuapp.com/get_email_config', { // Atualize para a URL do seu backend
+                fetch('https://disparo-89ad0ee329c4.herokuapp.com/get_email_config', { // Atualize para a URL do seu backend
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`
@@ -627,7 +627,7 @@
                     from_name: document.getElementById('from_name_modal').value
                 };
 
-                fetch('https://disparo-68c7349b4b0a.herokuapp.com/set_email_config', { // Corrigido para o endpoint correto
+                fetch('https://disparo-89ad0ee329c4.herokuapp.com/set_email_config', { // Corrigido para o endpoint correto
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -658,7 +658,7 @@
 
             // Função para atualizar o saldo de créditos após salvar configurações
             function updateCredits(token){
-                fetch('https://disparo-68c7349b4b0a.herokuapp.com/get_my_credits', { // Atualize para a URL do seu backend
+                fetch('https://disparo-89ad0ee329c4.herokuapp.com/get_my_credits', { // Atualize para a URL do seu backend
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`
